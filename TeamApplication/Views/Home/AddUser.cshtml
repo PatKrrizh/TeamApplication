@@ -1,7 +1,43 @@
 ﻿@{
-    ViewBag.Title = "users";
+    ViewBag.Title = "user details";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>User Details</h2>
+
+@using (Html.BeginForm("Info", "Home"))
+{
+    <div class="form-group">
+        <label class="form-label mt-4">First Name</label>
+        <input class="form-control" , Style="width:33%" type="text" />
+    </div>
+
+    <div class="form-group">
+        <label class="form-label mt-4">Last Name</label>
+        <input class="form-control" , Style="width:33%" type="text" />
+    </div>
+
+    <div class="form-group">
+        <label class="form-label mt-4">Date of Birth</label>
+        <input class="form-control" , Style="width:33%" type="text" />
+    </div>
+
+    <div class="form-select">
+        <label class="form-label mt-4">Membership Type</label>
+        <select class="form-select">
+            <option>Select Membership Type</option>
+            <option>Pay As You Go</option>
+            <option>Monthly</option>
+            <option>Quaterly</option>
+            <option>Annual</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-label mt-4">
+            <input type="checkbox" />
+            Is Subscribed?
+        </label>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Save</button>
+}
 
 
