@@ -13,14 +13,14 @@ namespace TeamApplication.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult AddUser()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Language()
         {
             ViewBag.Message = "Your contact page.";
 
