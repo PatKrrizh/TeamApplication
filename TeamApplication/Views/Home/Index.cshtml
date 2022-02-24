@@ -1,5 +1,31 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "User Information";
 }
+
+<h2>Users Information</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Membership Type</th>
+            <th scope="col">Subscribed?</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-active">
+            <td>Pankti Patel</td>
+            <td>25 March 1997</td>
+            <td>Pay As You Go</td>
+            <td>Yes</td>
+            <td>
+                @Html.ActionLink("Edit", "AddUser", "Home")
+                @Html.ActionLink("Delete", "Index", "Home")
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 
