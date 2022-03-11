@@ -1,43 +1,41 @@
-﻿@{
+﻿@model TeamApplication.ViewModels.UserViewModel
+@{
     ViewBag.Title = "user details";
 }
-<h2>User Details</h2>
+<h2>@TeamApplication.Resources.HomeText.UserDetails</h2>
 
-@using (Html.BeginForm("Info", "Home"))
+@using (Html.BeginForm("Save", "Home"))
 {
     <div class="form-group">
-        <label class="form-label mt-4">First Name</label>
-        <input class="form-control" , Style="width:33%" type="text" />
+        @Html.LabelFor(m => m.User.FirstName, TeamApplication.Resources.HomeText.Fname, new { @class = "form-label mt-4" })
+        @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", Style = "width:33%" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.User.LastName, TeamApplication.Resources.HomeText.Lname, new { @class = "form-label mt-4" })
+        @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", Style = "width:33%" })
     </div>
 
     <div class="form-group">
-        <label class="form-label mt-4">Last Name</label>
-        <input class="form-control" , Style="width:33%" type="text" />
+        @Html.LabelFor(m => m.User.Birthdate, TeamApplication.Resources.HomeText.DateOfBirth, new { @class = "form-label mt-4" })
+        @Html.TextBoxFor(m => m.User.Birthdate, "{0: d MMM yyyy}", new { @class = "form-control", Style = "width:33%"})
     </div>
 
     <div class="form-group">
-        <label class="form-label mt-4">Date of Birth</label>
-        <input class="form-control" , Style="width:33%" type="text" />
+        @Html.LabelFor(m => m.User.MembershipTypeId, TeamApplication.Resources.HomeText.MembershipType, new { @class = "form-label mt-4" })
+        @Html.DropDownListFor(m => m.User.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), TeamApplication.Resources.HomeText.SelectMT, new { @class = "form-select", Style = "width:33%" })
     </div>
 
-    <div class="form-group">
-        <label class="form-label mt-4" Style="width:33%">Membership Type</label>
-        <select class="form-select" Style="width:33%" >
-            <option>Select Membership Type</option>
-            <option>Pay As You Go</option>
-            <option>Monthly</option>
-            <option>Quaterly</option>
-            <option>Annual</option>
-        </select>
-    </div>
     <div class="form-group">
         <label class="form-label mt-4">
-            <input type="checkbox" />
-            Is Subscribed?
+            @Html.CheckBoxFor(m => m.User.IsSubscribed)
+            @TeamApplication.Resources.HomeText.Subscribed
         </label>
     </div>
 
-    <button class="btn btn-primary" type="submit">Save</button>
+    @Html.HiddenFor(m => m.User.Id)
+    <p></p>
+
+    <button class="btn btn-primary" type="submit">@TeamApplication.Resources.HomeText.Save</button>
 }
 
 

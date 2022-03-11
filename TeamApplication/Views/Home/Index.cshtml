@@ -1,31 +1,120 @@
-﻿@{
+﻿@model IEnumerable<TeamApplication.Models.User>
+
+@{
     ViewBag.Title = "User Information";
 }
 
-<h2>Users Information</h2>
+@{
+    List<DataLayer.MembershipType.MembershipTypeDetails> membershipTypes = ViewBag.MembershipTypes;
+}
 
-<table class="table table-hover">
+<h2>@TeamApplication.Resources.HomeText.UserInfo</h2>
+
+<table id="users" class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Date of Birth</th>
-            <th scope="col">Membership Type</th>
-            <th scope="col">Subscribed?</th>
+            <th scope="col">@TeamApplication.Resources.HomeText.Name</th>
+            <th scope="col">@TeamApplication.Resources.HomeText.DateOfBirth</th>
+            <th scope="col">@TeamApplication.Resources.HomeText.MembershipType</th>
+            <th scope="col">@TeamApplication.Resources.HomeText.Subscribed</th>
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
-        <tr class="table-active">
-            <td>Pankti Patel</td>
-            <td>25 March 1997</td>
-            <td>Pay As You Go</td>
-            <td>Yes</td>
-            <td>
-                @Html.ActionLink("Edit", "AddUser", "Home")
-                @Html.ActionLink("Delete", "Index", "Home")
-            </td>
-        </tr>
+        @foreach (var user in Model)
+        {
+            <tr class="table-active">
+                <td>@user.FirstName @user.LastName </td>
+                <td>@user.Birthdate.ToString("d MMM yyyy")</td>
+                <td>
+                    @membershipTypes.Single(m => m.Id == user.MembershipTypeId).Name
+                </td>
+                <td>@user.IsSubscribed</td>
+                <td>
+                    @Html.ActionLink(TeamApplication.Resources.HomeText.Edit, "Edit", "Home", new { Id = user.Id }, new { @class = "btn btn-sm btn-primary" })
+
+                    <button @*data-customer-id="@user.Id"*@ onclick="OpenModal(@user.Id)" class="btn btn-sm btn-danger js-delete">@TeamApplication.Resources.HomeText.Delete</button>
+                    @*@Html.ActionLink("Delete", "Delete", "Home", new { Id = user.Id }, new { @class = "btn btn-sm btn-primary" })*@
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
+<div class="modal" id="modal_delete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@TeamApplication.Resources.HomeText.DeleteUser</h5>
+                <button id="btnClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>@TeamApplication.Resources.HomeText.DeleteMsg</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnYes" type="button" class="btn btn-primary">@TeamApplication.Resources.HomeText.Yes</button>
+                <button id="btnNo" type="button" class="btn btn-secondary" data-bs-dismiss="modal">@TeamApplication.Resources.HomeText.No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        function OpenModal(userId)
+        {
+            var $confirm = $("#modal_delete");
+                $confirm.modal("show");
+                $confirm.find("#btnClose").off("click").click(function () {
+                    $confirm.modal("hide");
+                });
+                $confirm.find("#btnYes").off("click").click(function () {
+                    $confirm.modal("hide");
+                    deleteUser(userId);
+                });
+                $confirm.find("#btnNo").off("click").click(function () {
+                    $confirm.modal("hide");
+                });
+        }
+        //$(document).ready(function () {
+        //    $("#users .js-delete").on("click", function (Id) {
+
+        //        var $confirm = $("#modal_delete");
+        //        $confirm.modal("show");
+        //        $confirm.find("#btnClose").off("click").click(function () {
+        //            $confirm.modal("hide");
+        //        });
+        //        $confirm.find("#btnYes").off("click").click(function () {
+        //            $confirm.modal("hide");
+        //            deleteUser(Id);
+        //        });
+        //        $confirm.find("#btnNo").off("click").click(function () {
+        //            $confirm.modal("hide");
+        //        });
+        //    });
+        //});
+
+        function deleteUser(Id) {
+            $.post("/Home/Delete", {Id : Id}, function (data) {
+                location.reload();
+            });
+            console.log(Id)
+            //$.ajax({
+            //    type: 'POST',
+            //    dataType: 'json',
+            //    url: '../Home/Delete',
+            //    data: JSON.stringify({ "Id": Id }),
+            //    //data: {"Id" : },
+            //    contentType: 'application/json',
+            //    processData: false,
+            //    success: function (Data) {
+            //        location.reload();
+            //    },
+            //});
+        };
+    </script>
+}
 

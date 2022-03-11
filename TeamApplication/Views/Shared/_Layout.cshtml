@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - Team Application</title>
     @Styles.Render("~/Content/bootstrap-new.css")
     @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
     <div class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -18,11 +19,27 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Add User", "AddUser", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Language", "Language", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink(TeamApplication.Resources.HomeText.Home, "Index", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink(TeamApplication.Resources.HomeText.AddUser, "AddUser", "Home", null, new { @class = "nav-link" })</li>
                 </ul>
             </div>
+
+            @if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" || System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en-US")
+            {
+                <form class="d-flex">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">@Html.ActionLink("French", "Change", "Home", new { LanguageAbbrevation = "fr-CA" }, new { @class = "nav-link active" })</li>
+                    </ul>
+                </form>
+            }
+            else
+            {
+                <form class="d-flex">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">@Html.ActionLink("English", "Change", "Home", new { LanguageAbbrevation = "en-US" }, new { @class = "nav-link active" })</li>
+                    </ul>
+                </form>
+            }
         </div>
     </div>
     <p></p>
